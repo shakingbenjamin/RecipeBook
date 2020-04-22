@@ -1,28 +1,23 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.css']
+  styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit {
-  @Output() recipeItemSelected = new EventEmitter<Recipe>();
-
-  recipes: Recipe[] = [
-    new Recipe('test recipe',
-      'this is a test description',
-      'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1275&q=80'),
-      new Recipe('another test recipe',
-      'this is a test description',
-      'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1275&q=80')
-  ];
-
-  constructor() { }
+  // emitted event is no longer needed
+  // @Output() recipeItemSelected = new EventEmitter<Recipe>();
+  recipes: Recipe[];
+  // short hand way of declaring a property only in the arguments
+  constructor(private recipeService: RecipeService) {}
 
   ngOnInit(): void {
+    this.recipes = this.recipeService.getRecipes();
   }
-
-  onRecipeSelected(recipe: Recipe) {
-    this.recipeItemSelected.emit(recipe);
-  }
+  // using service instead of listening and parsing through components
+  // onRecipeSelected(recipe: Recipe) {
+  //   this.recipeItemSelected.emit(recipe);
+  // }
 }
