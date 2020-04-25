@@ -1,8 +1,10 @@
-import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 
 export class ShoppingListService {
-  ingredientsChanged = new EventEmitter<Ingredient[]>();
+  // subject to replace emitters
+  // ingredientsChanged = new EventEmitter<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>();
   private ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
     new Ingredient('Potatoes', 10),
@@ -16,7 +18,7 @@ export class ShoppingListService {
     this.ingredients.push(ingredient);
     // when the ingredients list changes, so that the output reflects this
     // a new splice of the ingredients is taken.
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngredients(ingredients: Ingredient[]) {
@@ -27,6 +29,8 @@ export class ShoppingListService {
     // the spread operator ... separates arrays as push won't take arrays
     this.ingredients.push(...ingredients);
     // as the ingredient have changed, need to get the new list
-    this.ingredientsChanged.emit(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
+    // subject uses next instead of emit that event emitter uses
+    // this.ingredientsChanged.emit(this.ingredients.slice());
   }
 }
