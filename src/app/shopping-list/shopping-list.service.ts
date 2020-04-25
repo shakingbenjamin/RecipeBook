@@ -1,10 +1,12 @@
 import { Subject } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { ThrowStmt } from '@angular/compiler';
 
 export class ShoppingListService {
   // subject to replace emitters
   // ingredientsChanged = new EventEmitter<Ingredient[]>();
   ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
   private ingredients: Ingredient[] = [
     new Ingredient('Apples', 5),
     new Ingredient('Potatoes', 10),
@@ -12,6 +14,15 @@ export class ShoppingListService {
 
   getIngredients() {
     return this.ingredients.slice();
+  }
+
+  getIngredient(index: number) {
+    return this.ingredients[index];
+  }
+
+  updateIngredient(updatedIngredient: Ingredient, index: number) {
+    this.ingredients[index] = updatedIngredient;
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngredient(ingredient: Ingredient) {
