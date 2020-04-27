@@ -44,4 +44,10 @@ export class ShoppingListService {
     // subject uses next instead of emit that event emitter uses
     // this.ingredientsChanged.emit(this.ingredients.slice());
   }
+
+  deleteIngredient(index: number){
+    // delete one item from array at specified index
+    this.ingredients.splice(index, 1);
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
 }

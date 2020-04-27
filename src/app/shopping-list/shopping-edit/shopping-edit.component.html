@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- local ref bound to javascript object angular created behind the scenes -->
-        <form (ngSubmit)="onAddItem(f)" #f="ngForm">
+        <form (ngSubmit)="onSubmitItem(f)" #f="ngForm">
             <div class="row">
                 <div class="col-sm-5 form-group">
                     <label for="name">name</label>
@@ -14,9 +14,9 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 btn-toolbar">
-                    <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editMode ?  'update' : 'add' }}</button>
-                    <button class="btn btn-danger" type="button">delete</button>
-                    <button class="btn btn-warning" type="button">clear</button>
+                    <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ itemSelected ?  'update' : 'add' }}</button>
+                    <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="itemSelected">delete</button>
+                    <button class="btn btn-warning" type="button" (click)="onClear()">clear</button>
                 </div>
             </div>
         </form>
