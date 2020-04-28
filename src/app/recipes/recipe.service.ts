@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { Recipe } from './recipe.model';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { Subject } from 'rxjs';
 
 // so that a service can be injected into a service
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-  constructor(private shoppingListService: ShoppingListService) {}
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -35,6 +35,8 @@ export class RecipeService {
     ),
   ];
 
+  constructor(private shoppingListService: ShoppingListService) {}
+
   getRecipes() {
     // without the slice method this would return a reference to the recipes
     // using slice without arguments will return a new array that's an exact copy of the one in this service
@@ -51,12 +53,16 @@ export class RecipeService {
 
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
-    console.log(recipe);
     this.recipesChanged.next(this.recipes.slice());
   }
 
   updateRecipe(index: number, recipe: Recipe) {
     this.recipes[index] = recipe;
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  deleteRecipe(index: number) {
+    this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
   }
 }
