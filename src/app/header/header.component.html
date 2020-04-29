@@ -1,15 +1,8 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <!-- old collapse code
-            <button type="button" class="navbar-toggle" (click)="collapsed = !collapsed">
-              <span class="icon-bar" *ngFor="let iconBar of [1, 2, 3]"></span>
-            </button> -->
             <a routerLink="/" class="navbar-brand">Recipe book</a>
         </div>
-
-        <!-- old collapse code 
-        <div class="collapse navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true"> -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li routerLinkActive='active'><a routerLink='/recipes'>Recipes</a></li>
@@ -19,8 +12,8 @@
                 <li class="dropdown" appDropdown>
                     <a style="cursor: pointer;" class="dropdown-toggle" role="button">admin <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a style="cursor: pointer;">Save data</a></li>
-                        <li><a style="cursor: pointer;">Fetch data</a></li>
+                        <li><a style="cursor: pointer;" (click)="onDataSave()">Save data</a></li>
+                        <li><a style="cursor: pointer;" (click)="onDataFetch()">Fetch data</a></li>
                     </ul>
                 </li>
             </ul>

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-
 import { Recipe } from './recipe.model';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
@@ -9,11 +8,13 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-
+  //private recipes: Recipe[] = [];
+  // old hard coded test recipes
   private recipes: Recipe[] = [
     new Recipe(
       'Vege Curry',
       'A mild vegetable curry.',
+  //tslint:disable-next-line: max-line-length
       'https://images.unsplash.com/photo-1582576163090-09d3b6f8a969?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1651&q=80',
       [
         new Ingredient('Rice', 5),
@@ -25,6 +26,7 @@ export class RecipeService {
     new Recipe(
       'Simple Spaghetti',
       'A simple but tasty spaghetti recipe',
+  //tslint:disable-next-line: max-line-length
       'https://images.unsplash.com/photo-1521389508051-d7ffb5dc8a40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60',
       [
         new Ingredient('Spaghetti', 1),
@@ -36,6 +38,11 @@ export class RecipeService {
   ];
 
   constructor(private shoppingListService: ShoppingListService) {}
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
   getRecipes() {
     // without the slice method this would return a reference to the recipes
